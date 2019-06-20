@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      async function getStockPriceByName1(name) {
+        const stockPrice = await getStockPriceByName0("老子").then(dui => {
+          console.log(dui);
+        });
+        console.log(3);
+        return "stockPrice";
+      }
+      async function getStockPriceByName0(name) {
+        const stockPrice = await (function() {
+          console.log("齐桓公");
+          return new Promise((v, r) => {
+            console.log("荀子");
+            v("孔子");
+          }).then(dui => {
+            console.log(dui);
+          });
+        })();
+        console.log(6);
+        return name;
+      }
+      getStockPriceByName1("孟子").then(
+        dui => {
+          console.log(dui);
+        },
+        cuo => {
+          console.log(cuo);
+        }
+      );
+      new Promise((dui, cuo) => {
+        console.log("韩非子");
+        dui("dui");
+      }).then(dui => {
+        console.log(dui);
+      });
+      console.log("孟子");
+      
+    </script>
+  </body>
+</html>

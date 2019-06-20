@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>数组去重</title>
+  </head>
+  <body>
+    <script>
+      //1.双重循环
+      function unique1(array) {
+        let new_array = [];
+        for (let i = 0; i < array.length; i++) {
+          let is_same = false;
+          for (let j = i + 1; j < array.length; j++) {
+            if (Object.is(array[i], array[j])) {
+              is_same = true;
+            }
+          }
+          if (!is_same) {
+            new_array.push(array[i]);
+          }
+        }
+        return new_array;
+      }
+
+      //2.1 只针对数组成员是简单的数值，字符串情况
+      function unique21(array) {
+        let obj = {},
+          new_array = [];
+        for (let i = 0; i < array.length; i++) {
+          if (!obj[array[i]]) {
+            new_array.push(array[i]);
+            obj[array[i]] = 1;
+          }
+        }
+        return new_array;
+      }
+      //2.2升级版 成员可以是对象
+      function unique22(array) {
+        let map = new Map(),
+          new_array = [];
+        for (let i = 0; i < array.length; i++) {
+          if (!map.has(array[i])) {
+            map.set(array[i], 1);
+            new_array.push(array[i]);
+          }
+        }
+        return new_array;
+      }
+
+      //3.用了Map，就会想到Set,那就利用Sap成员不会重复这个特点
+      function unique3(array) {
+        // return Array.from(new Set(array))
+        return [...new Set(array)];
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>find</title>
+  </head>
+  <body>
+    <script>
+      // 用对象的属性查找数组中的对象
+      var inventory = [
+        { name: "apples", quantity: 2 },
+        { name: "bananas", quantity: 0 },
+        { name: "cherries", quantity: 5 }
+      ];
+      let arrItem = inventory.find((item, index, arr) => {
+        return item.name == "cherries";
+      });
+      console.log(arrItem);
+    </script>
+  </body>
+</html>

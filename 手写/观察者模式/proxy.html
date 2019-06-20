@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>proxy</title>
+  </head>
+  <body>
+    <script>
+      class TargetObj {
+        constructor(age, name) {
+          this.age = age;
+          this.name = name;
+        }
+      }
+      let tagobj = new TargetObj(1, "张三");
+      let observerproxy = new Proxy(tagobj, {
+        get: (target, key, receiver) => {
+          console.log(target, key, receiver);
+          return Reflect.get(target, key, receiver);
+        },
+        set: (target, key, value, receiver) => {
+          console.log(target, key, value, receiver);
+          return Reflect.set(target, key, value, receiver);
+        }
+      });
+      observerproxy.age;
+      observerproxy.name = "李四";
+    </script>
+  </body>
+</html>

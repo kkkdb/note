@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>defineProperty</title>
+  </head>
+  <body>
+    <script>
+      // 创建对象
+      var targetObj = {
+        age: 1
+      };
+      console.log(targetObj)
+      // 定义值改变时的处理函数
+      function observer(oldVal, newVal) {
+        // 其他处理逻辑...
+        console.log("name属性的值从 " + oldVal + " 改变为 " + newVal);
+      }
+
+      // 定义name属性及其set和get方法
+      Object.defineProperty(targetObj, "name", {
+        enumerable: true,
+        configurable: true,
+        get: function() {
+          return name;
+        },
+        set: function(val) {
+          //调用处理函数
+          observer(name, val);
+          name = val;
+        }
+      });
+
+      targetObj.name = "Martin";
+      targetObj.name = "Lucas";
+      console.log("targetObj:", targetObj);
+    </script>
+  </body>
+</html>

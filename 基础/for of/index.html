@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let obj = {
+        name: "张胜男",
+        age: 18,
+        sex: "male",
+        job: "xxx"
+      };
+      try {
+        for (let value of obj) {
+          console.log(value);
+        }
+      } catch {
+        console.error("obj不能for of遍历");
+      }
+      console.log("给obj添加迭代器 Symbol.iterator");
+      Object.defineProperty(obj, Symbol.iterator, {
+        enumerable: false, //是否可枚举
+        writable: false, //是否可写
+        configurable: true, //是否可删除
+        value: function() {
+          let that = this,
+            nowIndex = 0,
+            key = Object.keys(that);
+          return {
+            next: function() {
+              let h = {
+                value: that[key[nowIndex]],
+                done: nowIndex >= key.length
+              };
+              nowIndex++;
+              return h;
+            }
+          };
+        }
+      });
+      try {
+        console.log("for of 遍历结果：")
+        for (let value of obj) {
+          console.log(value);
+        }
+      } catch {
+        console.error("obj还是不能for of遍历");
+      }
+    </script>
+  </body>
+</html>

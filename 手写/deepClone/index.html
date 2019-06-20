@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>deepClone</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * @param {object || function} object
+       * @return {object || function}
+       */
+      function deepClone(object) {
+        if (typeof object !== "object" && typeof object !== "function") {
+          return object;
+        }
+        let newObject = Array.isArray(object) ? [] : {};
+        Object.keys(object).forEach(item => {
+          newObject[item] =
+            typeof object[item] == "object"
+              ? deepClone(object[item])
+              : object[item];
+        });
+        return newObject;
+      }
+
+      let oldObject = {
+        a: 1,
+        b: {
+          c: 2,
+          d: 3
+        }
+      };
+      let newObject = deepClone(oldObject);
+      newObject.b.c = 4;
+      console.log(newObject.b.c == oldObject.b.c); //false
+    </script>
+  </body>
+</html>

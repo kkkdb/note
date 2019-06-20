@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Promise</title>
+  </head>
+  <body>
+    <script>
+      const PENDING = "pending";
+      const RESOLVED = "resolved";
+      const REJECTED = "rejected";
+      let that;
+      class MyPromise {
+        constructor(fn) {
+          that = this;
+          this.state = PENDING; //初始状态
+          this.value = null; //用来存reject或者reject传入的值
+          this.resolvedCallbacks = []; //保存resolve之后的then的回调函数
+          this.rejectedCallbacks = []; //保存rejec之后的then的回调函数
+          this.init(fn);
+        }
+        init(fn) {
+          try {
+            fn(this.resolve, this.reject);
+          } catch (e) {
+            this.reject(e);
+          }
+        }
+        resolve(value) {
+          if (that.state === PENDING) {
+            that.state = RESOLVED;
+            that.value = value;
+            that.resolvedCallbacks.forEach(cb => cb(value));
+          }
+        }
+        reject(value) {
+          if (that.state === PENDING) {
+            that.state = REJECTED;
+            that.value = value;
+            that.rejectedCallbacks.forEach(cb => cb(value));
+          }
+        }
+        then(onFulfilled, onRejected) {
+          onFulfilled =
+            typeof onFulfilled === "function" ? onFulfilled : r => r;
+          onRejected =
+            typeof onRejected === "function"
+              ? onRejected
+              : r => {
+                  throw r;
+                };
+          if (that.state === PENDING) {
+            that.resolvedCallbacks.push(onFulfilled);
+            that.rejectedCallbacks.push(onRejected);
+          } else if (that.state === RESOLVED) {
+            onFulfilled(that.value);
+          } else if (that.state === REJECTED) {
+            onRejected(that.value);
+          }
+        }
+      }
+
+      let p = new MyPromise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(123);
+        }, 1000);
+      });
+      p.then(val => {
+        console.log(val);
+      });
+    </script>
+  </body>
+</html>

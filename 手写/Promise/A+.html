@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Promise/A+</title>
+  </head>
+  <body>
+    <script>
+      let that;
+      const PENDING = "pending";
+      const RESOLVED = "resolved";
+      const REJECTED = "rejected";
+      class MyPrimise {
+        constructor(fn) {
+          that = this;
+          this.value = null;
+          this.state = PENDING;
+          this.resolvedCallbacks = [];
+          this.rejectedCallbacks = [];
+          this.init(fn);
+        }
+        init(fn) {
+          try {
+            fn(this.resolve, this.reject);
+          } catch (e) {
+            this.reject(e);
+          }
+        }
+        resolve(value) {
+          if (value instanceof MyPrimise) {
+            return value.then(that.resolve, that.reject);
+          }
+          setTimeout(() => {
+            if (that.state === PENDING) {
+              that.value = value;
+              that.state = RESOLVED;
+              that.resolvedCallbacks.forEach(cb => cb(value));
+            }
+          }, 0);
+        }
+        reject(value) {
+          setTimeout(() => {
+            if (that.state === PENDING) {
+              that.value = value;
+              that.state = REJECTED;
+              that.rejectedCallbacks.forEach(cb => cb(value));
+            }
+          }, 0);
+        }
+        resolvePromise(promise2, x, resolve, reject) {
+          let then,
+            thenCalledOrThrow = false;
+          if (promise2 === x) {
+            return reject(
+              new TypeError("Chaining cycle detected for promise!")
+            );
+          }
+          if (x instanceof MyPrimise) {
+            if (x.state === PENDING) {
+              x.then(v => {
+                that.resolvePromise(promise2, v, resolve, reject);
+              });
+            } else {
+              x.then(resolve, reject);
+            }
+            return;
+          }
+          if (
+            x !== null &&
+            (typeof x === "object" || typeof x === "function")
+          ) {
+            try {
+              then = x.then;
+              if (typeof x === "function") {
+                then.call(
+                  x,
+                  y => {
+                    if (thenCalledOrThrow) return;
+                    thenCalledOrThrow = true;
+                    return that.resolvePromise(promise2, y, resolve, reject);
+                  },
+                  y => {
+                    if (thenCalledOrThrow) return;
+                    thenCalledOrThrow = true;
+                    return reject(r);
+                  }
+                );
+              } else {
+                resolve(x);
+              }
+            } catch (e) {
+              if (thenCalledOrThrow) return;
+              thenCalledOrThrow = true;
+              reject(e);
+            }
+          } else {
+            resolve(x);
+          }
+        }
+        then(onResolved, OnRejected) {
+          let promise2;
+          onResolved = typeof onResolved === "function" ? onResolved : r => r;
+          OnRejected =
+            typeof OnRejected === "function"
+              ? OnRejected
+              : r => {
+                  throw r;
+                };
+          if (that.state === PENDING) {
+            return (promise2 = new MyPrimise((resolve, reject) => {
+              that.resolvedCallbacks.push(value => {
+                try {
+                  let x = onResolved(value);
+                  that.resolvePromise(promise2, x, resolve, reject);
+                } catch (e) {
+                  reject(e);
+                }
+              });
+              that.rejectedCallbacks.push(value => {
+                try {
+                  let x = OnRejected(value);
+                  that.resolvePromise(promise2, x, resolve, reject);
+                } catch (e) {
+                  reject(e);
+                }
+              });
+            }));
+          } else if (that.state === RESOLVED) {
+            return (promise2 = new MyPrimise((resolve, reject) => {
+              setTimeout(() => {
+                try {
+                  let x = onResolved(that.value);
+                  that.resolvePromise(promise2, x, reject, resolve);
+                } catch (e) {
+                  reject(e);
+                }
+              }, 0);
+            }));
+          } else if (that.state === REJECTED) {
+            return (promise2 = new MyPrimise((resolve, reject) => {
+              setTimeout(() => {
+                try {
+                  let x = OnRejected(that.value);
+                  that.resolvePromise(promise2, x, resolve, reject);
+                } catch (e) {
+                  reject(e);
+                }
+              }, 0);
+            }));
+          }
+        }
+      }
+
+      let p = new MyPrimise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(123);
+        }, 1000);
+      });
+      p.then(res => {
+        console.log(res);
+      });
+    </script>
+  </body>
+</html>

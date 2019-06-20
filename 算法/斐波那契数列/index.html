@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>斐波那契数列</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * 斐波那契数列 (1,1,2,3,5,8,13...)
+       * @param {number} num
+       * @return {number}
+       */
+      function fibonacci(num) {
+        if (num < 2) {
+          return num;
+        } else {
+          return arguments.callee(num - 1) + arguments.callee(num - 2);
+        }
+      }
+      console.log(fibonacci(5)); //5
+      console.log(fibonacci(10)); //55
+    </script>
+  </body>
+</html>

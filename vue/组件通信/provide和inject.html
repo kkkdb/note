@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>provide和inject</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script>
+      //provide 和 inject
+      Vue.component("A", {
+        template: `
+          <div>
+            $attrs:{{$attrs}}
+            <B v-bind="$attrs" v-on="$listeners" />
+          </div>
+        `
+      });
+      Vue.component("B", {
+        template: `
+          <div>
+            <C v-bind="$attrs" v-on="$listeners" />
+          </div>
+        `,
+        mounted: function() {
+          this.$emit("text1", "我是B");
+        }
+      });
+      Vue.component("C", {
+        template: `
+          <div>{{$attrs.name}}</div>
+        `,
+        inject: ["age", "call"],
+        mounted: function() {
+          console.log(this.age);
+          this.call();
+          this.$emit("text2", "我是C");
+        }
+      });
+      new Vue({
+        el: "#app",
+        data: function() {
+          return {
+            name: "传递给C的讯息"
+          };
+        },
+        provide: {
+          age: 16,
+          call: function() {
+            console.log("call me");
+          }
+        },
+        methods: {
+          textHandle1(name) {
+            console.log("text1 " + name);
+          },
+          textHandle2(name) {
+            console.log("text2 " + name);
+          }
+        },
+        template: `<A :name="name" @text1="textHandle1" @text2="textHandle2" />`
+      });
+    </script>
+  </body>
+</html>

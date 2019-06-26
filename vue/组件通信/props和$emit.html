@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>props和$emit</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script>
+      //父=》子props 和 子=》父$emit
+      Vue.component("App", {
+        props: ["name"],
+        template: `
+          <div>
+            XX
+            <button @click="call">我是谁？</button>
+          </div>
+        `,
+        methods: {
+          call() {
+            this.$emit("callName", "小明");
+          }
+        }
+      });
+      new Vue({
+        el: "#app",
+        data: function() {
+          return {
+            name: "vue"
+          };
+        },
+        methods: {
+          callName(name) {
+            alert(name);
+          }
+        },
+        template: `<App :name="name" @callName="callName"/>`
+      });
+    </script>
+  </body>
+</html>

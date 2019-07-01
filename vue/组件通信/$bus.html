@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>$parent</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script>
+      //$bus 中央时间总线 兄弟间组件通信
+      let bus = new Vue();
+      Vue.component("App1", {
+        template: `
+          <div>
+            App1
+          </div>
+        `,
+        mounted() {
+          bus.$on("test", function(val) {
+            console.log(val);
+          });
+        }
+      });
+      Vue.component("App2", {
+        template: `
+          <div>
+            App2
+          </div>
+        `,
+        mounted() {
+          bus.$emit("test", 666);
+        }
+      });
+      new Vue({
+        el: "#app",
+        template: `
+          <div>
+            <App1 />
+            <App2 />
+          </div>
+        `
+      });
+    </script>
+  </body>
+</html>

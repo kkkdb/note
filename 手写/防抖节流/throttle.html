@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>节流</title>
+    <style>
+      .h5000 {
+        height: 5000px;
+        background-color: #999;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="h5000"></div>
+    <script>
+      /* 
+      节流函数
+      高频事件函数，n秒内只会执行一次，所以节流函数会稀释函数的执行频率
+      不想自己封装也可以直接引用lodash
+    */
+      function throttle(fn, s = 500) {
+        let canDo = true;
+        return function(...args) {
+          if (canDo) {
+            canDo = false;
+            setTimeout(() => {
+              fn.apply(this, args);
+              canDo = true;
+            }, s);
+          }
+        };
+      }
+
+      function sayHi() {
+        console.log("节流成功");
+      }
+      window.onscroll = throttle(sayHi, 1000);
+    </script>
+  </body>
+</html>

@@ -10,10 +10,10 @@
     <div id="app"></div>
     <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
     <script>
-      //父=》子props 和 子=》父$emit
+      //$parent 和 $children
       Vue.component("App", {
         props: ["name"],
-        data: function() {
+        data() {
           return {
             age: 18
           };
@@ -32,13 +32,13 @@
       });
       new Vue({
         el: "#app",
-        data: function() {
+        data() {
           return {
             name: "小芳",
             age: null
           };
         },
-        mounted: function() {
+        mounted() {
           this.age = this.$children[0].age;
         },
         methods: {

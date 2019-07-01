@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function _new(Con, ...args) {
+        let obj = {};
+        Object.setPrototypeOf(obj, Con.prototype);
+        let result = Con.apply(obj, args);
+        return result instanceof Object ? result : obj;
+      }
+      function Test(name, age) {
+        this.name = name;
+        this.age = age;
+      }
+      Test.prototype.talk = function() {
+        console.log(`我的名字是${this.name}，今年${this.age}岁了`);
+      };
+
+      let jojo = _new(Test, "jojo", 19);
+      jojo.talk();
+    </script>
+  </body>
+</html>

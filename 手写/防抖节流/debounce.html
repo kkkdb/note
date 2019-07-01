@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>防抖</title>
+  </head>
+  <body>
+    <input type="text" id="input" />
+    <script>
+      /* 
+      防抖函數
+      触发高频函数n秒内只会执行一次，若n秒内再次触发，则重新计算时间
+    */
+      function debounce(fn, s = 500) {
+        let timer = null;
+        return function(...args) {
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            fn.apply(this, args);
+          }, s);
+        };
+      }
+      function sayHi(str) {
+        return () => {
+          console.log(str);
+        };
+      }
+      document
+        .getElementById("input")
+        .addEventListener("input", debounce(sayHi("防抖成功"), 500));
+    </script>
+  </body>
+</html>

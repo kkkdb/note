@@ -25,7 +25,7 @@
             <C v-bind="$attrs" v-on="$listeners" />
           </div>
         `,
-        mounted: function() {
+        mounted() {
           this.$emit("text1", "我是B");
         }
       });
@@ -34,7 +34,7 @@
           <div>{{$attrs.name}}</div>
         `,
         inject: ["age", "call"],
-        mounted: function() {
+        mounted() {
           console.log(this.age);
           this.call();
           this.$emit("text2", "我是C");
@@ -42,14 +42,14 @@
       });
       new Vue({
         el: "#app",
-        data: function() {
+        data() {
           return {
             name: "传递给C的讯息"
           };
         },
         provide: {
           age: 16,
-          call: function() {
+          call() {
             console.log("call me");
           }
         },

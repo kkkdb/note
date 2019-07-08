@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>三中方法</title>
+  </head>
+  <body>
+    <script>
+      //1.Object.prototype.toString.call()
+      const arr = [1, 2];
+      console.log(arr.toString()); //1,2
+      let obj = Object.prototype.toString.call(arr);
+      console.log(obj); //[object, Array]
+
+      //2.instanceof 通过原型链去判断
+      console.log([] instanceof Array);
+      console.log([] instanceof Object);
+
+      //3.Array.isArray 比instanceof好，可以检测出iframes
+      console.log(Array.isArray([]));
+    </script>
+  </body>
+</html>

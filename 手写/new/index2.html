@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>new超简化</title>
+  </head>
+  <body>
+    <script>
+      function _new(Con, ...args) {
+        let obj = Object.create(Con.prototype);
+        let res = Con.apply(obj, args);
+        return res instanceof Object ? res : obj;
+      }
+
+      function Test(age, name) {
+        this.age = age;
+        this.name = name;
+      }
+      Test.prototype.sayName = function() {
+        console.log(this.name);
+      };
+      let obj = _new(Test, 13, "张三");
+      console.log(obj.age);
+      obj.sayName();
+      console.log(obj instanceof Test);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        {1:222, 2:123, 5:888}，请把数据处理为如下结构：[222, 123, null, null, 888, null, null, null, null, null, null, null]。
+      */
+
+      function objToArr(obj, len = 12) {
+        /* 
+          @params object
+          @return arr
+        */
+        let arr = [];
+        for (let i = 0; i < len; i++) {
+          arr.push(null);
+        }
+        for (let item in obj) {
+          arr[item - 1] = obj[item];
+        }
+        return arr;
+      }
+
+      function objToArr2(obj, len = 12) {
+        /* 
+          @params object
+          @return arr
+        */
+        obj.length = len + 1;
+        let arr = Array.from(obj).splice(1);
+        arr = arr.map(item => item || null);
+        return arr;
+      }
+
+      let arr = objToArr2({ 1: 222, 2: 123, 5: 888 });
+      console.log(arr);
+    </script>
+  </body>
+</html>

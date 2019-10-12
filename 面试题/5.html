@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //编程题，写个程序把 entry 转换成如下对象
+      var entry = {
+        a: {
+          b: {
+            c: {
+              dd: "abcdd"
+            }
+          },
+          d: {
+            xx: "adxx"
+          },
+          e: "ae"
+        }
+      };
+      // 要求转换成如下对象
+      var output = {
+        "a.b.c.dd": "abcdd",
+        "a.d.xx": "adxx",
+        "a.e": "ae"
+      };
+
+      function changeObj(obj) {
+        let return_obj = {};
+        changeItem(obj);
+        function changeItem(obj, key = "") {
+          for (let item in obj) {
+            if (typeof obj[item] === "object") {
+              let arr = changeItem(obj[item], key + "." + item);
+              if (arr) {
+                return_obj[arr[1].substring(1)] = arr[0];
+              }
+            } else {
+              return [obj[item], key + "." + item];
+            }
+          }
+        }
+        return return_obj;
+      }
+      var output = changeObj(entry);
+      console.log(output);
+
+
+
+      function changeObj2(obj) {
+        let return_obj = {},
+          temp_arr = [],
+          first_key = "";
+        for (let item in obj) {
+          let arr = item.split(".");
+          first_key = arr.splice(0, 1)[0];
+          let value = obj[item];
+          arr.reverse().map(elem => {
+            value = makeObj(elem, value);
+          });
+          temp_arr.push(value);
+        }
+        function makeObj(key, value) {
+          let obj = {};
+          obj[key] = value;
+          return obj;
+        }
+        return_obj[first_key] = {};
+        for (let i = 0; i < temp_arr.length; i++) {
+          let value = temp_arr[i];
+          for (let item in value) {
+            return_obj[first_key][item] = value[item];
+          }
+        }
+        console.log(JSON.stringify(return_obj));
+        return return_obj;
+      }
+      changeObj2(output);
+    </script>
+  </body>
+</html>

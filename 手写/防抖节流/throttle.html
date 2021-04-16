@@ -22,7 +22,7 @@
     */
       function throttle(fn, s = 500) {
         let canDo = true;
-        return function(...args) {
+        return function (...args) {
           if (canDo) {
             canDo = false;
             setTimeout(() => {
@@ -32,11 +32,22 @@
           }
         };
       }
+      //方法二 判断时间差 大于等待时间就执行
+      function throttle2(fn, s = 500) {
+        let pre = new Date();
+        return function (...args) {
+          let now = new Date();
+          if (now - pre > s) {
+            fn.apply(this, args);
+            pre = now;
+          }
+        };
+      }
 
       function sayHi() {
         console.log("节流成功");
       }
-      window.onscroll = throttle(sayHi, 1000);
+      window.onscroll = throttle2(sayHi, 1000);
     </script>
   </body>
 </html>

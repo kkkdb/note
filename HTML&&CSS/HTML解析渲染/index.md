@@ -36,8 +36,10 @@
 
 在绘制阶段，系统会遍历呈现树，然后调用呈现器的"paint"方法，将呈现器的内容绘制在界面上。
 
+布局和绘制还会涉及到的一个问题就是回流和重绘的问题。[回流和重绘](https://github.com/kkkdb/note/blob/master/HTML%26%26CSS/%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98/index.md)
+
 ### 个人总结
 
 总结一下，呈现引擎从网络层获取请求文档的内容，然后开始解析 HTML 的文档，并逐个转换成 DOM 树上 DOM 节点。同时也会去解析外部的 CSS 文件和样式元素中的样式数据。HTML 中这些带有视觉指令的信息将会创建另一个树结构：呈现树。呈现树构建完成后，呈现引擎将对呈现树进行布局和绘制。
 
-参考文献： [HTML 渲染过程详解](https://www.cnblogs.com/dojo-lzz/p/3983335.html)、[浏览器解析渲染HTML文档的过程](https://segmentfault.com/a/1190000018652029)
+参考文献： [HTML 渲染过程详解](https://www.cnblogs.com/dojo-lzz/p/3983335.html)、[浏览器解析渲染 HTML 文档的过程](https://segmentfault.com/a/1190000018652029)

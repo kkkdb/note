@@ -1,6 +1,6 @@
-#### 主要流程
+### 主要流程
 
-呈现引擎一开始会从网络层获取请求文档的内容，随后开始解析 HTML 文档，并将各标记逐个转化成“内容树”上的 DOM 节点。同时也会解析外部 CSS 文件以及样式元素中的样式数据。HTML 中这些带有视觉指令的样式信息将用于创建另一个树结构：**呈现树**。
+呈现引擎从网络层获取请求文档的内容，随后开始解析 HTML 文档，并将各标记逐个转化成“内容树”上的 DOM 节点。同时也会解析外部 CSS 文件以及样式元素中的样式数据。HTML 中这些带有视觉指令的样式信息将用于创建另一个树结构：**呈现树**。
 
 呈现树包含多个带有视觉属性（如颜色和尺寸）的矩形。这些矩形的排列顺序就是它们将在屏幕上显示的顺序。
 
@@ -15,132 +15,29 @@
 3. DOM 树与 CSS 样式进行附着构造呈现树
 4. 布局
 5. 绘制
-#### 解析与构建 DOM 树
 
-在这里我们讨论两种 DOM 元素的解析，即样式文件(link)和脚本文件(script)。
-由于浏览器采用自上而下的方式解析，在遇到这两种元素时都会阻塞浏览器的解析，直到外部资源加载并解析或执行完毕后才会继续向下解析 html。
+### 解析与构建 DOM 树
 
-经过测试得出以下四条结论：
+前两步我们放在一起讨论，浏览器的实际工作也是将他们放在一起进行的。浏览器中的呈现引擎用来解析 HTML 以及 CSS。JavaScript 引擎用来解析和执行 JavaScript。
+在构建 DOM 树的过程中，会遇到 CSS 样式表，link 标签，脚本文件等元素，导致阻塞。具体分析可以看[CSS 和 JS 的解析和阻塞]()。
 
-**1. 外部样式会阻塞后续脚本执行，直到外部样式加载并解析完毕。**
+### 构建呈现树
 
-```
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>JS Bin</title>
-    <script>
-      var start = +new Date();
-    </script>
-    <link href="http://udacity-crp.herokuapp.com/style.css?rtt=2" rel="stylesheet" />
-  </head>
-  <body>
-    <span id="result"></span>
-    <script>
-      var end = +new Date();
-      document.getElementById("result").innerHTML = end - start;
-    </script>
-  </body>
-</html>
-```
-
-![样式文件阻塞](https://images0.cnblogs.com/blog/412020/201409/201357415969516.jpg)
-
-**2. 外部样式不会阻塞后续外部脚本的加载，但会阻塞外部脚本的执行。**
-
-```
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>JS Bin</title>
-  <script>var start = +new Date;</script>
-  <link href="http://udacity-crp.herokuapp.com/style.css?rtt=2" rel="stylesheet">
-</head>
-<body>
-  test
-  <script src="http://udacity-crp.herokuapp.com/time.js?rtt=1&a"></script>
-  <div id="result"></div>
-  <script>var end = +new Date;document.getElementById("result").innerHTML = end-start;</script>
-</body>
-</html>
-```
-
-外部脚本代码
-
-```
-var loadTime = document.createElement('div');
-loadTime.innerText = document.currentScript.src + ' executed @ ' + window.performance.now();
-loadTime.style.color = 'blue';
-document.body.appendChild(loadTime);
-```
-
-![2](https://images0.cnblogs.com/blog/412020/201409/201407227214213.jpg)
-从结果可以看到开始加载时间不受影响，但执行时间受阻塞
-
-**3. 如果后续外部脚本含有 async 属性（IE 下为 defer），则外部样式不会阻塞该脚本的加载与执行**
-
-```
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>JS Bin</title>
-  <script>var start = +new Date;</script>
-  <link href="http://udacity-crp.herokuapp.com/style.css?rtt=2" rel="stylesheet">
-</head>
-
-<body>
-  test
-  <script src="http://udacity-crp.herokuapp.com/time.js?rtt=1&a" async></script>
-  <div id="result"></div>
-  <script>var end = +new Date;document.getElementById("result").innerHTML = end-start;</script>
-</body>
-</html>
-```
-
-![3](https://images0.cnblogs.com/blog/412020/201409/201417036284209.jpg)
-从结果看得到开始加载和执行都没有受阻塞
-
-**4. 对于动态创建的 link 标签不会阻塞其后动态创建的 script 的加载与执行，不管 script 标签是否具有 async 属性，但对于其他非动态创建的 script，以上三条结论仍适用**
-
-```
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>JS Bin</title>
-  <script>var start = +new Date;</script>
-
-</head>
-<body>
-  test
-  <script>
-    //动态引入样式文件
-    var link = document.createElement('link');
-    link.href = "http://udacity-crp.herokuapp.com/style.css?rtt=2";
-    link.rel = "stylesheet";
-    document.head.appendChild(link);
-    //动态引入脚本文件
-    var script = document.createElement('script');
-    script.src = "http://udacity-crp.herokuapp.com/time.js?rtt=1&a";
-    document.head.appendChild(script);
-  </script>
-  <div id="result"></div>
-  <script>var end = +new Date;document.getElementById("result").innerHTML = end-start;</script>
-</body>
-</html>
-```
-
-这是最终浏览器内的结构
-![4.1](https://images0.cnblogs.com/blog/412020/201409/201427440654419.jpg)
-![4.2](https://images0.cnblogs.com/blog/412020/201409/201429598156546.jpg)
-通过结构图和瀑布图可以看出，动态引入的样式文件对于动态引入的脚本文件的加载和执行都不会阻塞。
-
-#### 构建呈现树
 什么是呈现树？它由可视化元素按照其显示顺序而组成的树，也是文档的可视化表示。它的作用是让您按照正确的顺序绘制内容。
+这里涉及到一个 CSS 的权重和优先级的问题，可以看下[CSS 的权重与优先级](https://github.com/kkkdb/note/blob/master/HTML%26%26CSS/CSS%E5%92%8CJS%E7%9A%84%E8%A7%A3%E6%9E%90%E5%92%8C%E9%98%BB%E5%A1%9E/index.md)。
 
+### 布局
 
+构建完呈现树之后，呈现器便开始计算每个呈现树节点的大小和位置信息，这被称之为布局或者重排。
+布局过程是递归进行的，从根呈现器（也就是浏览器的 html 节点）开始，然后递归遍历子节点，为每一需要计算的呈现器计算几何信息。
+每个呈现器有一个"layout"或者"reflow"的方法，父代会调用子代的 layout 方法
 
-参考文献： [HTML 渲染过程详解](https://www.cnblogs.com/dojo-lzz/p/3983335.html)
+### 绘制
+
+在绘制阶段，系统会遍历呈现树，然后调用呈现器的"paint"方法，将呈现器的内容绘制在界面上。
+
+### 个人总结
+
+总结一下，呈现引擎从网络层获取请求文档的内容，然后开始解析 HTML 的文档，并逐个转换成 DOM 树上 DOM 节点。同时也会去解析外部的 CSS 文件和样式元素中的样式数据。HTML 中这些带有视觉指令的信息将会创建另一个树结构：呈现树。呈现树构建完成后，呈现引擎将对呈现树进行布局和绘制。
+
+参考文献： [HTML 渲染过程详解](https://www.cnblogs.com/dojo-lzz/p/3983335.html)、[浏览器解析渲染HTML文档的过程](https://segmentfault.com/a/1190000018652029)

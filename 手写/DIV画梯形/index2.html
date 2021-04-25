@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /*
+        利用3d旋转和透视3d旋转和透视方式
+        perspective：对元素进行透视操作
+        rotateX：以x轴（横轴）进行旋转（前后仰俯）
+      */
+      .box {
+        width: 400px;
+        height: 400px;
+        background-color: black;
+        transform: perspective(2em) rotateX(2deg);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+  </body>
+</html>

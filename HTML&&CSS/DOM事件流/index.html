@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #box1 {
+        background-color: teal;
+        width: 500px;
+        height: 500px;
+      }
+      #box2 {
+        background-color: thistle;
+        width: 300px;
+        height: 300px;
+      }
+      #box3 {
+        background-color: tomato;
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box1">
+      box1
+      <div id="box2">
+        box2
+        <div id="box3">box3</div>
+      </div>
+    </div>
+    <script>
+      function log(txt) {
+        return () => {
+          console.log(txt);
+        };
+      }
+      
+      box1.addEventListener("click", log("box1冒泡"), false);
+      box2.addEventListener("click", log("box2冒泡"), false);
+      box3.addEventListener("click", log("box3冒泡"), false);
+      box1.addEventListener("click", log("box1捕获"), true);
+      box2.addEventListener("click", log("box2捕获"), true);
+      box3.addEventListener("click", log("box3捕获"), true);
+      
+      box1.onclick = log("box1 onclick6666666");
+      box2.onclick = log("box2 onclick");
+      box3.onclick = log("box3 onclick");
+      box1.onclick = log("box1 onclick");
+    </script>
+  </body>
+</html>

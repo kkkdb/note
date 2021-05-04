@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>清除浮动</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .item {
+            width: 100px;
+            height: 100px;
+            background-color: blanchedalmond;
+            float: left;
+            margin: 12px;
+        }
+
+        /* 添加清除浮动的元素 */
+        .clear {
+            clear: both;
+        }
+
+        /* 给、父元素触发BFC */
+        .wrap2 {
+            display: flow-root;
+        }
+
+        /* 用伪元素 */
+        .clearfix::before,
+        .clearfix::after {
+            display: table;
+            content: '';
+        }
+
+        .clearfix::after {
+            clear: both;
+        }
+
+        .clearfix {
+            zoom: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 方法一：添加清除浮动的元素。缺点是有多余元素 -->
+    <div class="wrap">
+        <div class="item"></div>
+        <div class="clear"></div>
+    </div>
+
+    <!-- 给父元素触发BFC。 -->
+    <div class="wrap2">
+        <div class="item"></div>
+    </div>
+
+    <!-- 用伪元素清除 -->
+    <div class="wrap3 clearfix">
+        <div class="item"></div>
+    </div>
+</body>
+
+</html>

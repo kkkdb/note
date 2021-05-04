@@ -26,9 +26,18 @@
 - [x] [async await](https://github.com/kkkdb/note/blob/master/JavaScript/async%20await/index.md)
 - [x] [Array 的访问、修改和迭代](https://github.com/kkkdb/note/blob/master/JavaScript/Array's%20properties%20and%20functions/index.md)
 - [x] [Object](https://github.com/kkkdb/note/blob/master/JavaScript/Object's%20properties%20and%20functions/index.md)
-- [x] [自定义文件上传](https://github.com/kkkdb/note/blob/master/html%26css/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html)
+- [x] [自定义文件上传](https://github.com/kkkdb/note/blob/master/JavaScript/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html)
 
 ## [Vue](https://github.com/kkkdb/note/tree/master/Vue)
+
+- [x] [生命周期](https://github.com/kkkdb/note/blob/master/Vue/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/index.md)
+- [x] [Vue VM->V 原理浅析](https://github.com/kkkdb/note/blob/master/Vue/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E5%8E%9F%E7%90%86/Vue%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E5%8E%9F%E7%90%86.md)
+- [x] [computed](https://github.com/kkkdb/note/blob/master/Vue/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/computed%26watch/computed.md)
+- [x] [$nextTick](https://github.com/kkkdb/note/blob/master/Vue/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/nextTick/index.md)
+- [x] [重写数组方法](https://github.com/kkkdb/note/blob/master/Vue/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E5%8E%9F%E7%90%86/%E9%87%8D%E5%86%99%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95.md)
+- [x] [diff](https://github.com/kkkdb/note/blob/master/Vue/key/index.md)
+- [x] [实现 EventBus](https://github.com/kkkdb/note/blob/master/Vue/%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/EventBus.md)
+- [x] [自定义指令](https://github.com/kkkdb/note/blob/master/Vue/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4/directives.md)
 
 ## [React](https://github.com/kkkdb/note/tree/master/React)
 

@@ -55,3 +55,5 @@
 - [x] [React Ref](https://github.com/kkkdb/note/blob/master/React/Ref/index.md)
 
 ## [Webpack](https://github.com/kkkdb/note/tree/master/Webpack)
+
+## [WechatApplet](https://github.com/kkkdb/note/tree/master/WechatApplet)

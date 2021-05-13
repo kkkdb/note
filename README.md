@@ -38,6 +38,7 @@
 
 ## [Vue](https://github.com/kkkdb/note/tree/master/Vue)
 
+- [x] [响应式原理](https://github.com/kkkdb/note/blob/master/Vue/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/index.md)
 - [x] [生命周期](https://github.com/kkkdb/note/blob/master/Vue/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/index.md)
 - [x] [Vue VM->V 原理浅析](https://github.com/kkkdb/note/blob/master/Vue/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E5%8E%9F%E7%90%86/Vue%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E5%8E%9F%E7%90%86.md)
 - [x] [computed](https://github.com/kkkdb/note/blob/master/Vue/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/computed%26watch/computed.md)

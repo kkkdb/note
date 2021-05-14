@@ -12,7 +12,7 @@
 
 然后执行 `beforeCreate`.
 
-然后 `init injections & init reacttivity`.
+然后 `init injections & init reactivity`.
 
 然后执行 `created`.
 

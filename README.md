@@ -55,6 +55,15 @@
 - [x] [React 性能优化](https://github.com/kkkdb/note/blob/master/Performance%20optimization/React%E7%9A%84%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/index.md)
 - [x] [React Ref](https://github.com/kkkdb/note/blob/master/React/Ref/index.md)
 
+## [手写](https://github.com/kkkdb/note/tree/master/%E6%89%8B%E5%86%99)
+- [x] [防抖节流]](<https://github.com/kkkdb/note/tree/master/%E6%89%8B%E5%86%99/%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81>)
+- [x] [深拷贝]](<https://github.com/kkkdb/note/blob/master/%E6%89%8B%E5%86%99/deepClone/index.js>)
+- [x] [Promise]](<https://github.com/kkkdb/note/tree/master/%E6%89%8B%E5%86%99/Promise>)
+- [x] [new]](<https://github.com/kkkdb/note/tree/master/%E6%89%8B%E5%86%99/new>)
+- [x] [call]](<https://github.com/kkkdb/note/blob/master/%E6%89%8B%E5%86%99/call_apply_bind/call.js>)
+- [x] [apply]](<https://github.com/kkkdb/note/blob/master/%E6%89%8B%E5%86%99/call_apply_bind/apply.js>)
+- [x] [bind]](<https://github.com/kkkdb/note/blob/master/%E6%89%8B%E5%86%99/call_apply_bind/bind.js>)
+
 ## [Webpack](https://github.com/kkkdb/note/tree/master/Webpack)
 
 ## [WechatApplet](https://github.com/kkkdb/note/tree/master/WechatApplet)

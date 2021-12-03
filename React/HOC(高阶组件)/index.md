@@ -21,11 +21,11 @@ class ComponentA extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.state.a);
+        console.log(this.state.title);
     }
 
     render() {
-        return <div>{this.state.a}</div>;
+        return <div>{this.state.title}</div>;
     }
 }
 

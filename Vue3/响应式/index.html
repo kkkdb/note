@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">click</button>
+    <div id="app"></div>
+  </body>
+
+  <script type="module">
+    import { reactive, effect } from "./index.js";
+
+    const btn = document.getElementById("btn");
+    const app = document.getElementById("app");
+
+    const state = reactive({
+      count: 0,
+    });
+
+    effect(() => {
+      app.textContent = state.count;
+    });
+
+    btn.addEventListener("click", () => {
+      state.count++;
+      console.log("state.count =====>", state.count);
+    });
+  </script>
+</html>

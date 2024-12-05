@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <button>Count++</button>
+      <div id="el"></div>
+    </div>
+    <script>
+      const button = document.querySelector("button");
+      const el = document.querySelector("#el");
+
+      let activeEffect;
+      let set = new Set();
+      let tasks = new Set();
+
+      function runTask() {
+        Promise.resolve().then(() => {
+          if (tasks.size) {
+            tasks.forEach((cb) => cb());
+            tasks.clear();
+          }
+        });
+      }
+
+      function effect(fn) {
+        activeEffect = fn;
+        fn();
+        activeEffect = null;
+      }
+
+      const count = {
+        _value: 0,
+        get value() {
+          activeEffect && set.add(activeEffect); // 收集依赖
+          return this._value;
+        },
+        set value(val) {
+          this._value = val;
+          set.forEach((cb) => tasks.add(cb)); // 触发依赖
+          runTask();
+        },
+      };
+
+      effect(() => {
+        console.log("effect");
+        el.innerHTML = count.value;
+      });
+
+      function nextTick(cb) {
+        Promise.resolve().then(cb);
+      }
+
+      button.addEventListener("click", () => {
+        count.value++;
+        count.value++;
+        nextTick(() => {
+          console.log(el.innerHTML);
+        });
+      });
+    </script>
+  </body>
+</html>
